@@ -25,11 +25,15 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+
       - name: Install dependencies
         run: npm install
 
       - name: Generate Android project
         run: npx cap add android
+
+      - name: Sync web files to Android
+        run: npx cap sync android
 
       - name: Install icon tools
         run: python3 -m pip install --break-system-packages Pillow
