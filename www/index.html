@@ -362,4 +362,64 @@ function vcaToggleMenu(open){const drawer=document.getElementById('vca-premium-d
 function vcaDrawerGo(page){vcaToggleMenu(false);go(page)}
 function vcaOpenCourses(){vcaToggleMenu(false);const btn=document.getElementById('vte-courses-button');if(btn){btn.click()}else{go('home')}}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')vcaToggleMenu(false)});
+</script><style id="vca-approved-fix">
+/* Home artwork is the user-approved reference; all other pages retain original functionality. */
+body.vca-approved-home{background:#04101e!important}
+body.vca-approved-home>header,body.vca-approved-home>.shell>aside,body.vca-approved-home>nav.bottom,body.vca-approved-home>footer{display:none!important}
+body.vca-approved-home .shell{display:block!important;margin:0!important;padding:0!important;max-width:none!important;width:100%!important}
+body.vca-approved-home #app{padding:0!important;margin:0!important;width:100%!important;max-width:none!important}
+.vca-exact-screen{position:relative;width:100%;max-width:780px;margin:0 auto;line-height:0;background:#04101e}
+.vca-exact-screen img{display:block;width:100%;height:auto}
+.vca-hotspot{position:absolute;border:0;background:transparent;color:transparent;cursor:pointer;padding:0;touch-action:manipulation}
+.vca-hotspot:focus-visible{outline:3px solid #1cc5ff;outline-offset:-3px}
+.vca-drawer[hidden],.vca-drawer-shade[hidden]{display:none!important}
+.vca-drawer:not([hidden]){display:flex!important;position:fixed!important;z-index:10010!important;top:0;bottom:0;left:0;width:min(330px,85vw);padding:24px 16px;background:#071b35;color:white;overflow-y:auto;flex-direction:column;gap:9px;box-shadow:8px 0 30px #0009}
+.vca-drawer:not([hidden]) button{min-height:45px;cursor:pointer}
+.vca-drawer-shade:not([hidden]){display:block!important;position:fixed!important;inset:0;background:#0009;z-index:10009!important}
+body.vca-approved-home .vca-exact-screen{padding-bottom:0}
+</style>
+<script id="vca-approved-ui-script">
+(function(){
+ const artwork='assets/approved-home.png';
+ const hotspots=[
+ ['Meniu',3.0,1.5,10,10,()=>vcaToggleMenu(true)],
+ ['Informații',90,1.5,9,10,()=>{const x=document.querySelector('header button[aria-label*=nforma]');if(x)x.click();else vcaToggleMenu(true)}],
+ ['Simulări VCA',5,17.2,21,12,()=>go('exams')],
+ ['Cursuri și certificate',29,17.2,21,12,()=>vcaOpenCourses()],
+ ['Materiale de învățare',52,17.2,22,12,()=>go('chapters')],
+ ['Progresul meu',76,17.2,21,12,()=>go('progress')],
+ ['Basic VCA',5,39.2,91,8.7,()=>{go('exams')}],
+ ['VOL-VCA',5,48.8,91,8.7,()=>{go('exams')}],
+ ['Manual Handling',5,65.3,91,8.4,()=>vcaOpenCourses()],
+ ['Abrasive Wheels',5,74.8,91,8.4,()=>vcaOpenCourses()],
+ ['Acasă',0,90,25,10,()=>go('home')],
+ ['Cursuri',25,90,25,10,()=>vcaOpenCourses()],
+ ['Teste',50,90,25,10,()=>go('exams')],
+ ['Certificate',75,90,25,10,()=>vcaOpenCourses()]
+ ];
+ function approvedHome(){
+   if(typeof view==='undefined')return;
+   document.body.classList.toggle('vca-approved-home',view==='home');
+   if(view!=='home')return;
+   const app=document.getElementById('app');if(!app)return;
+   const box=document.createElement('div');box.className='vca-exact-screen';
+   const img=document.createElement('img');img.src=artwork;img.alt='VCA Tests Europe — interfața oficială aprobată';box.appendChild(img);
+   hotspots.forEach(([label,x,y,w,h,fn])=>{const b=document.createElement('button');b.type='button';b.className='vca-hotspot';b.setAttribute('aria-label',label);b.title=label;Object.assign(b.style,{left:x+'%',top:y+'%',width:w+'%',height:h+'%'});b.addEventListener('click',fn);box.appendChild(b)});
+   app.replaceChildren(box);
+ }
+ if(typeof render==='function'){
+   const originalRender=render;
+   render=function(){originalRender();approvedHome()};
+   approvedHome();
+ }
+ // The original drawer already contains language and theme settings.
+ // Make course navigation robust from the approved artwork.
+ const oldCourses=window.vcaOpenCourses;
+ window.vcaOpenCourses=function(){vcaToggleMenu(false);go('home');
+   // Existing course action may be present only after the original home render.
+   const button=document.getElementById('vte-courses-button');
+   if(button){button.click();return}
+   go('chapters');
+ };
+})();
 </script></body></html>
