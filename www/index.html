@@ -422,4 +422,40 @@ body.vca-approved-home .vca-exact-screen{padding-bottom:0}
    go('chapters');
  };
 })();
+</script><style id="vca-mobile-repair-v2">
+/* Android status/navigation bars: never place interactive controls underneath them. */
+html{min-height:100%;background:#04101e}
+body{min-height:100dvh;margin:0;background:#04101e}
+body.vca-approved-home .vca-exact-screen{margin-top:env(safe-area-inset-top, 0px)!important;max-width:780px}
+body.vca-approved-home .vca-exact-screen img{width:100%;height:auto;object-fit:contain}
+body:not(.vca-approved-home){background:#04101e!important;color:#f4f8ff!important}
+body:not(.vca-approved-home) header{background:linear-gradient(110deg,#06172e,#0a2748)!important;color:#fff!important;border-bottom:1px solid #1c5479!important;padding-top:max(12px,env(safe-area-inset-top,0px))!important}
+body:not(.vca-approved-home) .shell{background:#04101e!important;min-height:calc(100dvh - 130px)}
+body:not(.vca-approved-home) #app{color:#f4f8ff!important}
+body:not(.vca-approved-home) .bottom{background:#071b35!important;color:#fff!important;padding-bottom:max(10px,env(safe-area-inset-bottom,0px))!important}
+body:not(.vca-approved-home) .card,body:not(.vca-approved-home) .hero,body:not(.vca-approved-home) .choice,body:not(.vca-approved-home) .lesson,body:not(.vca-approved-home) .question,body:not(.vca-approved-home) .panel{background:linear-gradient(145deg,#102f4d,#071a33)!important;color:#f4f8ff!important;border:1px solid #2a648e!important;border-radius:18px!important}
+body:not(.vca-approved-home) h1,body:not(.vca-approved-home) h2,body:not(.vca-approved-home) h3{color:#fff!important}
+body:not(.vca-approved-home) p,body:not(.vca-approved-home) small{color:#c7d9e9}
+body:not(.vca-approved-home) button{touch-action:manipulation}
+@media(max-width:760px){body:not(.vca-approved-home) #app{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))!important}body:not(.vca-approved-home) .shell{padding:12px!important}body:not(.vca-approved-home) .bottom{z-index:90!important}body:not(.vca-approved-home) header{position:relative!important}}
+.vca-drawer:not([hidden]){padding-top:max(24px,calc(env(safe-area-inset-top,0px) + 20px))!important}
+</style>
+<script id="vca-mobile-repair-v2-script">
+(function(){
+  // The original courses shortcut exists in the hidden home UI; the approved
+  // artwork replaces that UI, so open the courses view through its own handler.
+  window.vcaOpenCourses=function(){
+    if(typeof vcaToggleMenu==='function')vcaToggleMenu(false);
+    if(typeof go==='function')go('home');
+    const button=document.getElementById('vte-courses-button');
+    if(button){button.click();return;}
+    if(typeof go==='function')go('chapters');
+  };
+  // Keep the native Android status bar opaque when Capacitor supports it.
+  document.addEventListener('DOMContentLoaded',function(){
+    try{const status=window.Capacitor?.Plugins?.StatusBar;
+      if(status){status.setOverlaysWebView?.({overlay:false});status.setBackgroundColor?.({color:'#04101e'});status.setStyle?.({style:'DARK'});}
+    }catch(e){console.warn('StatusBar adjustment unavailable',e)}
+  });
+})();
 </script></body></html>
