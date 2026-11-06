@@ -1,6 +1,7 @@
+
 {
   "name": "vca-tests-europe",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "scripts": {
     "android:init": "npx cap add android",
@@ -9,7 +10,9 @@
   },
   "dependencies": {
     "@capacitor/core": "^7.4.0",
-    "@capacitor/android": "^7.4.0"
+    "@capacitor/android": "^7.4.0",
+    "@capacitor/filesystem": "^7.1.4",
+    "@capacitor/share": "^7.0.2"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.4.0"
