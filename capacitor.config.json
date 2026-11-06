@@ -1,0 +1,8 @@
+{
+  "appId": "com.alexandrucibi.vcatestseurope",
+  "appName": "VCA Tests Europe",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
