@@ -363,56 +363,5 @@ function vcaDrawerGo(page){vcaToggleMenu(false);go(page)}
 function vcaOpenCourses(){vcaToggleMenu(false);const btn=document.getElementById('vte-courses-button');if(btn){btn.click()}else{go('home')}}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')vcaToggleMenu(false)});
 </script>
-<style id="approved-exact-dashboard-css">
-#approved-dashboard{position:fixed;inset:0;background:#020e1c;z-index:2147483000;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
-#approved-dashboard[hidden]{display:none!important}
-#approved-dashboard .approved-frame{position:relative;width:100%;max-width:700px;margin:0 auto;line-height:0}
-#approved-dashboard .approved-frame img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
-#approved-dashboard .hotspot{position:absolute;display:block;border:0;background:transparent;color:transparent;cursor:pointer;padding:0;touch-action:manipulation}
-#approved-dashboard .hotspot:focus-visible{outline:3px solid #20c8ff;outline-offset:-3px}
-</style>
-<div id="approved-dashboard" aria-label="VCA Tests Europe - pagina principală aprobată">
- <div class="approved-frame">
-  <img src="assets/approved-dashboard.png" alt="VCA Tests Europe - designul original aprobat" draggable="false">
-  <button class="hotspot" style="left:3%;top:4%;width:10%;height:7%" data-route="menu" aria-label="Meniu"></button>
-  <button class="hotspot" style="left:90%;top:4%;width:9%;height:7%" data-route="info" aria-label="Informații"></button>
-  <button class="hotspot" style="left:5%;top:21%;width:23%;height:13%" data-route="exams" aria-label="Simulări VCA"></button>
-  <button class="hotspot" style="left:29%;top:21%;width:23%;height:13%" data-route="courses" aria-label="Cursuri și certificate"></button>
-  <button class="hotspot" style="left:52%;top:21%;width:23%;height:13%" data-route="chapters" aria-label="Materiale de învățare"></button>
-  <button class="hotspot" style="left:76%;top:21%;width:21%;height:13%" data-route="progress" aria-label="Progresul meu"></button>
-  <button class="hotspot" style="left:5%;top:42%;width:91%;height:9%" data-route="exams" aria-label="Basic VCA"></button>
-  <button class="hotspot" style="left:5%;top:52%;width:91%;height:9%" data-route="exams" aria-label="VOL VCA"></button>
-  <button class="hotspot" style="left:5%;top:69%;width:91%;height:9%" data-route="courses" aria-label="Manual Handling"></button>
-  <button class="hotspot" style="left:5%;top:79%;width:91%;height:9%" data-route="courses" aria-label="Abrasive Wheels"></button>
-  <button class="hotspot" style="left:0%;top:91%;width:25%;height:9%" data-route="home" aria-label="Acasă"></button>
-  <button class="hotspot" style="left:25%;top:91%;width:25%;height:9%" data-route="courses" aria-label="Cursuri"></button>
-  <button class="hotspot" style="left:50%;top:91%;width:25%;height:9%" data-route="exams" aria-label="Teste"></button>
-  <button class="hotspot" style="left:75%;top:91%;width:25%;height:9%" data-route="courses" aria-label="Certificate"></button>
- </div>
-</div>
-<script id="approved-exact-dashboard-js">
-(function(){
- const panel=document.getElementById('approved-dashboard');
- function route(where){
-  if(where==='home'){panel.scrollTop=0;return;}
-  panel.hidden=true;
-  if(where==='menu'){if(typeof vcaToggleMenu==='function')vcaToggleMenu(true);return;}
-  if(where==='info'){if(typeof go==='function')go('home');return;}
-  if(where==='courses'){
-   if(typeof vcaOpenCourses==='function'){vcaOpenCourses();return;}
-   if(typeof go==='function')go('home');
-   const b=document.getElementById('vte-courses-button');if(b)b.click();return;
-  }
-  if(typeof go==='function')go(where);
- }
- panel.querySelectorAll('[data-route]').forEach(b=>b.addEventListener('click',()=>route(b.dataset.route)));
- // The original app stays intact underneath. Home navigation restores the approved dashboard.
- document.addEventListener('click',function(e){
-  if(!panel.hidden)return;
-  const target=e.target.closest('[data-page], [data-go], .bottom-item');
-  if(target&&((target.dataset.page||target.dataset.go)==='home')){setTimeout(()=>{panel.hidden=false},0)}
- });
- window.vcaShowApprovedHome=function(){panel.hidden=false;panel.scrollTop=0};
-})();
-</script>
+
 </body></html>
