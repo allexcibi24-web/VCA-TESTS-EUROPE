@@ -518,17 +518,21 @@ window.vcaLearningAnswer=function(id,qi,choice){const lang=language();if(lang===
 
 <style id="vte-back-below-menu-fix">
 /* Back button is under the hamburger, outside the header, not on top of it. */
-#vte-back-button:not([hidden]){display:flex!important;position:fixed!important;left:18px!important;top:var(--vte-back-top,230px)!important;width:54px!important;height:48px!important;z-index:120!important;border-radius:14px!important;background:#102c4d!important;border:1px solid #507394!important;color:white!important;box-shadow:0 4px 12px #071d3b24!important}
+#vte-back-button:not([hidden]){display:flex!important;position:fixed!important;left:var(--vte-back-left,18px)!important;top:var(--vte-back-top,230px)!important;width:var(--vte-back-width,54px)!important;height:48px!important;z-index:120!important;border-radius:14px!important;background:#102c4d!important;border:1px solid #507394!important;color:white!important;box-shadow:0 4px 12px #071d3b24!important}
 #vte-back-button[hidden]{display:none!important}
 body.vte-back-visible #app,body.vte-back-visible main{scroll-margin-top:65px}
 </style>
 <script id="vte-back-below-menu-script">
 (function(){
  function position(){
-  var btn=document.getElementById('vte-back-button');var head=document.querySelector('header');
-  if(!btn||!head)return;
-  var bottom=head.getBoundingClientRect().bottom;
-  btn.style.setProperty('--vte-back-top',Math.max(72,Math.round(bottom+12))+'px');
+  var btn=document.getElementById('vte-back-button');
+  var menu=document.getElementById('vte-menu-button');
+  if(!btn||!menu)return;
+  var rect=menu.getBoundingClientRect();
+  // Align the back arrow with the hamburger's left edge, immediately below it.
+  btn.style.setProperty('--vte-back-left',Math.round(rect.left)+'px');
+  btn.style.setProperty('--vte-back-width',Math.round(rect.width)+'px');
+  btn.style.setProperty('--vte-back-top',Math.round(rect.bottom+8)+'px');
   document.body.classList.toggle('vte-back-visible',!btn.hidden);
  }
  window.addEventListener('resize',position);window.addEventListener('scroll',position,{passive:true});
